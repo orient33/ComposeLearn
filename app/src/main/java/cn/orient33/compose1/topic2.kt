@@ -6,9 +6,11 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material.*
+import androidx.compose.material3.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -48,7 +50,7 @@ fun NameList(names: List<String>, m: Modifier) {
                 stateList.add(state)
             }
             Greeting(name = name, state)
-            Divider(color = Color.Blue)
+            HorizontalDivider(color = Color.Blue)
         }
     }
 }
@@ -58,9 +60,9 @@ fun NameList(names: List<String>, m: Modifier) {
 fun Counter(count: Int, countFun: (Int) -> Unit) {
     Button(
         onClick = { countFun(count + 1) },
-        colors = ButtonDefaults.buttonColors(
-            backgroundColor = if (count > 10) Color.Red else Color.Green
-        )
+//        colors = ButtonDefaults.buttonColors(
+//            backgroundColor = if (count > 10) Color.Red else Color.Green
+//        )
     ) {
         Text("I have been click $count times!", modifier = Modifier.padding(10.dp, 2.dp))
     }
@@ -83,7 +85,7 @@ fun Greeting(name: String, state: MutableState<Boolean>) {
             .background(bgColor)
 //        .clickable { select.value = !select.value }
             .clickable { state.value = !state.value },
-        style = MaterialTheme.typography.body1
+        style = MaterialTheme.typography.bodyLarge
     )
     OutlinedTextField(value = "OutlinedTextField", onValueChange = {
         Log.i("df", "OutlinedTextField onValueChanged. $it")

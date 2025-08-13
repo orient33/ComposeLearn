@@ -1,32 +1,47 @@
 package cn.orient33.compose1
 
 import android.util.Log
-import androidx.compose.foundation.*
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.*
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.Layout
+import androidx.compose.ui.layout.Placeable
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.core.graphics.scaleMatrix
-import cn.orient33.compose1.ui.theme.Compose1Theme
 import coil.compose.rememberImagePainter
 import kotlinx.coroutines.launch
-import java.lang.Math.max
 
 const val IMG_URL = "https://img-s-msn-com.akamaized.net/tenant/amp/entityid/AAMKW3Y.img"
 
@@ -39,7 +54,7 @@ fun PhotographerCard() {
             modifier = Modifier //注意顺序的影响
                 .padding(15.dp)
                 .clip(RoundedCornerShape(10.dp))
-                .background(MaterialTheme.colors.surface)
+//                .background(MaterialTheme.colors.surface)
                 .clickable {
                     Log.i("df", "clickable..happen.")
                 }
@@ -51,7 +66,7 @@ fun PhotographerCard() {
                     .size(30.dp)
                     .align(Alignment.CenterVertically),
                 shape = CircleShape,
-                color = MaterialTheme.colors.onSurface.copy(alpha = .2f)
+//                color = MaterialTheme.colors.onSurface.copy(alpha = .2f)
             ) {                //image
                 Image(
                     painter = rememberImagePainter(
@@ -68,9 +83,9 @@ fun PhotographerCard() {
                 Text("Alfred Sisley", fontWeight = FontWeight.Bold)
 
                 //隐式的传递数据给compose tree? TODO Color.luminance()?
-                CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
-                    Text("3 minutes ago", style = MaterialTheme.typography.body2)
-                }
+//                CompositionLocalProvider(LocalContext provides Content) {
+//                    Text("3 minutes ago", )//style = MaterialTheme.typography.bodyMedium)
+//                }
             }
         }
 
@@ -107,7 +122,7 @@ fun OneRow(index: Int) {
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
-            .background(MaterialTheme.colors.surface)
+//            .background(MaterialTheme.colors.surface)
             .clickable {}) {
         Image(
             painter = rememberImagePainter(data = "https://developer.android.google.cn/images/brand/Android_Robot.png"),
@@ -131,37 +146,37 @@ fun SimpleList() {
     }
 }
 
-@Composable
-fun SampleScaffold() {
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text("TopAppBar", modifier = Modifier.onSizeChanged { ii ->
-                        Log.i("df", "TopAppBar..Text.onSizeChanged. $ii")
-                    })
-                },
-                actions = {
-                    IconButton(onClick = { /*TODO*/ }) {
-                        Icon(Icons.Filled.Favorite, contentDescription = null)
-                    }
-                },
-            )
-        },
-//        bottomBar = {
-//        TextButton(onClick = {}) {
-//            Text(
-//                "bottomBar", modifier = Modifier
-//                    .fillMaxWidth()
-//                    .background(Color.Blue)
+//@Composable
+//fun SampleScaffold() {
+//    Scaffold(
+//        topBar = {
+//            TopAppBar(
+//                title = {
+//                    Text("TopAppBar", modifier = Modifier.onSizeChanged { ii ->
+//                        Log.i("df", "TopAppBar..Text.onSizeChanged. $ii")
+//                    })
+//                },
+//                actions = {
+//                    IconButton(onClick = { /*TODO*/ }) {
+//                        Icon(Icons.Filled.Favorite, contentDescription = null)
+//                    }
+//                },
 //            )
-//        }
+//        },
+////        bottomBar = {
+////        TextButton(onClick = {}) {
+////            Text(
+////                "bottomBar", modifier = Modifier
+////                    .fillMaxWidth()
+////                    .background(Color.Blue)
+////            )
+////        }
+////    }
+//    ) {
+//        PhotographerCard()
 //    }
-    ) {
-        PhotographerCard()
-    }
-
-}
+//
+//}
 
 //7. 自定义布局 custom layout , Layout -> ViewGroup
 // 不允许多次测量， 单词测量性能好，允许更深的层级
@@ -244,7 +259,7 @@ fun Chip(modifier: Modifier = Modifier, text: String) {
             Box(
                 modifier = Modifier
                     .size(16.dp, 16.dp)
-                    .background(color = MaterialTheme.colors.secondary)
+//                    .background(color = MaterialTheme.colors.secondary)
             )
             Spacer(Modifier.width(4.dp))
             Text(text = text)
@@ -299,7 +314,7 @@ fun TwoTexts(modifier: Modifier = Modifier, text1: String, text2: String) {
             text = text1
         )
 
-        Divider(
+        VerticalDivider(
             color = Color.Black, modifier = Modifier
                 .fillMaxHeight()
                 .width(1.dp)

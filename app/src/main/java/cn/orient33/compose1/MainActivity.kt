@@ -3,13 +3,14 @@ package cn.orient33.compose1
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -27,29 +28,21 @@ import cn.orient33.compose1.ui.theme.Compose1Theme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         setContent {
 //            Compose1Theme {
             // A surface container using the 'background' color from the theme
 //                Surface(color = MaterialTheme.colors.background) {
 //                    Greeting("Android")
 //                }
-            MyApp {
+            Compose1Theme {
+                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
 //                NewsStory("developer!")
 //                MyScreenContent()
 //                SampleScaffold()
-                BodyContent8()
+                    BodyContent8(modifier = Modifier.padding(innerPadding))
+                }
             }
-        }
-
-    }
-}
-
-
-@Composable
-fun MyApp(content: @Composable () -> Unit) {
-    Compose1Theme {
-        Surface {
-            content()
         }
     }
 }
@@ -58,7 +51,8 @@ fun MyApp(content: @Composable () -> Unit) {
 fun NewsStory(name: String) {
     Compose1Theme {
         val t = MaterialTheme.typography
-        val bodyText = "hi, there! 配置文本元素，将长度上限设置为 2 行。如果文本很短，不超过此限制，则此设置没有影响；但如果文本过长，显示的文本就会被自动截短。"
+        val bodyText =
+            "hi, there! 配置文本元素，将长度上限设置为 2 行。如果文本很短，不超过此限制，则此设置没有影响；但如果文本过长，显示的文本就会被自动截短。"
         Column(Modifier.padding(16.dp)) {
             Image(
                 painter = painterResource(id = R.drawable.header),
@@ -71,14 +65,14 @@ fun NewsStory(name: String) {
                 contentScale = ContentScale.FillBounds
             )
             Spacer(Modifier.height(20.dp))
-            Text(text = "Hello- $name )-(", style = t.h4)
+            Text(text = "Hello- $name )-(", style = t.headlineMedium)
             Text(
                 text = bodyText,
-                style = t.body1,
+                style = t.bodyLarge,//t.body1,
                 maxLines = 3,
                 overflow = TextOverflow.Ellipsis
             )
-            Text(text = "that's all!", style = t.body2)
+            Text(text = "that's all!", style = t.bodyMedium)
 
             LazyColumn {
                 items(50, { key -> "$key" }) { iii ->
@@ -94,10 +88,9 @@ fun NewsStory(name: String) {
     }
 }
 
-@Preview(showBackground = true)
+
+@Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun DefaultPreview() {
-    MyApp {
-        NewsStory(name = "Preview.")
-    }
+    NewsStory(name = "Preview.")
 }
