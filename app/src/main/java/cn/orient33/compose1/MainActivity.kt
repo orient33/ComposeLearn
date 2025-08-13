@@ -35,7 +35,9 @@ class MainActivity : ComponentActivity() {
 //                }
             MyApp {
 //                NewsStory("developer!")
-                MyScreenContent()
+//                MyScreenContent()
+//                SampleScaffold()
+                BodyContent8()
             }
         }
 
