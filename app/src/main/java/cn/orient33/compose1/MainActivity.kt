@@ -5,10 +5,14 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
@@ -29,8 +33,21 @@ class MainActivity : ComponentActivity() {
 //                Surface(color = MaterialTheme.colors.background) {
 //                    Greeting("Android")
 //                }
-            NewsStory("developer!")
-//            }
+            MyApp {
+//                NewsStory("developer!")
+                MyScreenContent()
+            }
+        }
+
+    }
+}
+
+
+@Composable
+fun MyApp(content: @Composable () -> Unit) {
+    Compose1Theme {
+        Surface {
+            content()
         }
     }
 }
@@ -60,6 +77,17 @@ fun NewsStory(name: String) {
                 overflow = TextOverflow.Ellipsis
             )
             Text(text = "that's all!", style = t.body2)
+
+            LazyColumn {
+                items(50, { key -> "$key" }) { iii ->
+                    Text("line $iii")
+                }
+            }
+            val count = remember { mutableStateOf(0) }
+
+            Counter(count.value) { c ->
+                count.value = c
+            }
         }
     }
 }
@@ -67,5 +95,7 @@ fun NewsStory(name: String) {
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
-    NewsStory("Preview!")
+    MyApp {
+        NewsStory(name = "Preview.")
+    }
 }
