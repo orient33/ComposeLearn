@@ -1,5 +1,6 @@
 package cn.orient33.compose1
 
+import android.util.Log
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -70,6 +71,7 @@ fun Greeting(name: String, state: MutableState<Boolean>) {
 //    val select = remember { mutableStateOf(false) } //写法 和 下面的效果一样 但是否有区别呢？ TODO
 //    var isSelect by remember { mutableStateOf(false) } // isSelect is Boolean, 上面是MutableState
     // by 关键词 需要导入  androidx.compose.runtime.getValue与setValue 否则by不生效. TODO??
+    //https://developer.android.com/jetpack/compose/state#state-in-composables 这里说写法是等效的
     val bgColor by animateColorAsState(if (state.value) Color.Blue else Color.Transparent)
 
     Text(
@@ -83,4 +85,7 @@ fun Greeting(name: String, state: MutableState<Boolean>) {
             .clickable { state.value = !state.value },
         style = MaterialTheme.typography.body1
     )
+    OutlinedTextField(value = "OutlinedTextField", onValueChange = {
+        Log.i("df", "OutlinedTextField onValueChanged. $it")
+    })
 }
